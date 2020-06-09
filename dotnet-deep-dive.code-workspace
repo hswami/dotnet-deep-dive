@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "01.ReferenceValueTypes"
+		},
+		{
+			"path": "02.CallingConventions"
+		},
+		{
+			"path": "03.FinalizerDisposable"
+		},
+		{
+			"path": "04.Enumerables"
+		},
+		{
+			"path": "05.Expressions"
+		},
+		{
+			"path": "06.Queryables"
+		}
+	]
+}
