@@ -40,19 +40,19 @@ namespace Enumerables
             Console.WriteLine();
         }
 
-        private static IEnumerable<int> GetNumbersUsingForEachLoopYield()
+        private static IEnumerable<int?> GetNumbersUsingForEachLoopYield()
         {
             foreach (var number in Enumerable.Range(0, 10))
                 yield return number;
         }
 
-        private static IEnumerable<int> GetNumbersUsingForLoopYield()
+        private static IEnumerable<int?> GetNumbersUsingForLoopYield()
         {
             for (var number = 0; number != 10; ++number)
                 yield return number;
         }
 
-        private static IEnumerable<int> GetNumbersUsingYieldOnly()
+        private static IEnumerable<int?> GetNumbersUsingYieldOnly()
         {
             yield return 0;
             yield return 1;
@@ -66,22 +66,21 @@ namespace Enumerables
             yield return 9;
         }
 
-        private static IEnumerable<int> GetNumbersUsingCustomIEnumerable()
+        private static IEnumerable<int?> GetNumbersUsingCustomIEnumerable()
             => new Numbers();
 
         private static string ToJson(this object obj)
             => JsonConvert.SerializeObject(obj);
     }
 
-    public class Numbers : IEnumerable<int>
+    public class Numbers : IEnumerable<int?>
     {
-        private readonly int[] _numbers =
-            Enumerable.Range(0, 10).ToArray();
+        private readonly int?[] _numbers =
+            Enumerable.Range(0, 10).Cast<int?>().ToArray();
 
-        public IEnumerator<int> GetEnumerator()
-            => new ArrayEnumerator<int>(_numbers);
+        public IEnumerator<int?> GetEnumerator()
+            => new ArrayEnumerator<int?>(_numbers);
 
-        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
     }
@@ -101,7 +100,7 @@ namespace Enumerables
             => _index = -1;
 
         public T Current
-            => _array[_index];
+            => _index < 0 ? default : _array[_index];
 
         object IEnumerator.Current
             => Current;
