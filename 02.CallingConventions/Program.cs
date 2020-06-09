@@ -17,8 +17,7 @@ namespace CallingConventions
 
             Console.WriteLine();
 
-            WorkOnValueTypeByValue(sampleValueType);
-            WorkOnReferenceTypeByValue(sampleReferenceType);
+            CallByValue(sampleValueType, sampleReferenceType);
 
             Console.WriteLine("AFTER : SampleValueType     {{ IntValue = {0}, StringValue = {1} }}", sampleValueType.IntValue, sampleValueType.StringValue);
             Console.WriteLine("AFTER : SampleReferenceType {{ IntValue = {0}, StringValue = {1} }}", sampleReferenceType.IntValue, sampleReferenceType.StringValue);
@@ -37,8 +36,7 @@ namespace CallingConventions
 
             Console.WriteLine();
 
-            WorkOnValueTypeByReferenceRequiresInitBeforeCall(ref sampleValueType2);
-            WorkOnReferenceTypeByReferenceRequiresInitBeforeCall(ref sampleReferenceType2);
+            CallByReferenceRequiresInitBeforeCall(ref sampleValueType2, ref sampleReferenceType2);
 
             Console.WriteLine("AFTER : SampleValueType     {{ IntValue = {0}, StringValue = {1} }}", sampleValueType2.IntValue, sampleValueType2.StringValue);
             Console.WriteLine("AFTER : SampleReferenceType {{ IntValue = {0}, StringValue = {1} }}", sampleReferenceType2.IntValue, sampleReferenceType2.StringValue);
@@ -57,8 +55,7 @@ namespace CallingConventions
 
             // Console.WriteLine();
 
-            WorkOnValueTypeByReferenceDoesNotRequireInitBeforeCall(out sampleValueType3);
-            WorkOnReferenceTypeByReferenceDoesNotRequireInitBeforeCall(out sampleReferenceType3);
+            CallByReferenceDoesNotRequireInitBeforeCall(out sampleValueType3, out sampleReferenceType3);
 
             Console.WriteLine("AFTER : SampleValueType     {{ IntValue = {0}, StringValue = {1} }}", sampleValueType3.IntValue, sampleValueType3.StringValue);
             Console.WriteLine("AFTER : SampleReferenceType {{ IntValue = {0}, StringValue = {1} }}", sampleReferenceType3.IntValue, sampleReferenceType3.StringValue);
@@ -71,23 +68,23 @@ namespace CallingConventions
             Console.WriteLine();
         }
 
-        private static void WorkOnValueTypeByValue(SampleValueType sampleValueType)
-            => sampleValueType = new SampleValueType { IntValue = 20, StringValue = "That" };
+        private static void CallByValue(SampleValueType sampleValueType, SampleReferenceType sampleReferenceType)
+        {
+            sampleValueType = new SampleValueType { IntValue = 20, StringValue = "That" };
+            sampleReferenceType = new SampleReferenceType { IntValue = 200, StringValue = "Also That" };
+        }
 
-        private static void WorkOnReferenceTypeByValue(SampleReferenceType sampleReferenceType)
-            => sampleReferenceType = new SampleReferenceType { IntValue = 200, StringValue = "Also That" };
+        private static void CallByReferenceRequiresInitBeforeCall(ref SampleValueType sampleValueType, ref SampleReferenceType sampleReferenceType)
+        {
+            sampleValueType = new SampleValueType { IntValue = 30, StringValue = "Or That" };
+            sampleReferenceType = new SampleReferenceType { IntValue = 300, StringValue = "Or Also That" };
+        }
 
-        private static void WorkOnValueTypeByReferenceRequiresInitBeforeCall(ref SampleValueType sampleValueType)
-            => sampleValueType = new SampleValueType { IntValue = 30, StringValue = "Or That" };
-
-        private static void WorkOnReferenceTypeByReferenceRequiresInitBeforeCall(ref SampleReferenceType sampleReferenceType)
-            => sampleReferenceType = new SampleReferenceType { IntValue = 300, StringValue = "Or Also That" };
-
-        private static void WorkOnValueTypeByReferenceDoesNotRequireInitBeforeCall(out SampleValueType sampleValueType)
-            => sampleValueType = new SampleValueType { IntValue = 40, StringValue = "And That" };
-
-        private static void WorkOnReferenceTypeByReferenceDoesNotRequireInitBeforeCall(out SampleReferenceType sampleReferenceType)
-            => sampleReferenceType = new SampleReferenceType { IntValue = 400, StringValue = "And Also That" };
+        private static void CallByReferenceDoesNotRequireInitBeforeCall(out SampleValueType sampleValueType, out SampleReferenceType sampleReferenceType)
+        {
+            sampleValueType = new SampleValueType { IntValue = 40, StringValue = "And That" };
+            sampleReferenceType = new SampleReferenceType { IntValue = 400, StringValue = "And Also That" };
+        }
     }
 
     public struct SampleValueType

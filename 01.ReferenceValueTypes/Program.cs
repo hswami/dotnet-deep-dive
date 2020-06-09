@@ -14,8 +14,7 @@ namespace ReferenceValueTypes
 
             Console.WriteLine();
 
-            WorkOnValueType(sampleValueType);
-            WorkOnReferenceType(sampleReferenceType);
+            DoWork(sampleValueType, sampleReferenceType);
 
             Console.WriteLine("AFTER : SampleValueType     {{ IntValue = {0}, StringValue = {1} }}", sampleValueType.IntValue, sampleValueType.StringValue);
             Console.WriteLine("AFTER : SampleReferenceType {{ IntValue = {0}, StringValue = {1} }}", sampleReferenceType.IntValue, sampleReferenceType.StringValue);
@@ -28,14 +27,11 @@ namespace ReferenceValueTypes
             Console.WriteLine();
         }
 
-        private static void WorkOnValueType(SampleValueType sampleValueType)
+        private static void DoWork(SampleValueType sampleValueType, SampleReferenceType sampleReferenceType)
         {
             sampleValueType.IntValue = 20;
             sampleValueType.StringValue = "That";
-        }
 
-        private static void WorkOnReferenceType(SampleReferenceType sampleReferenceType)
-        {
             sampleReferenceType.IntValue = 200;
             sampleReferenceType.StringValue = "Also That";
         }
