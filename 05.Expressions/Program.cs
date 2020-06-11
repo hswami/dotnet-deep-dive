@@ -33,6 +33,12 @@ namespace Expressions
 
             Console.WriteLine();
 
+            Func<int, int> factorialLambdaDelegate = n => Factorial(n);
+            Console.WriteLine("LAMBDA                   : {0}", factorialLambdaDelegate);
+            Console.WriteLine("RESULT                   : {0}", factorialLambdaDelegate(5));
+
+            Console.WriteLine();
+
             Expression<Func<int, int>> factorialInlineExpression = n => Factorial(n);
             Console.WriteLine("INLINE EXPRESSION        : {0}", factorialInlineExpression);
             Console.WriteLine("INLINE EXPRESSION BODY   : {0}", factorialInlineExpression.Body);
@@ -41,14 +47,16 @@ namespace Expressions
             Console.WriteLine();
 
             var parameterExpression = Expression.Parameter(typeof (int), "n");
-            var expressionTree = Expression.Call(
+            var methodCallExpression = Expression.Call(
                 typeof (Program),
                 nameof (Factorial),
                 new Type[0],
                 parameterExpression);
-            Console.WriteLine("EXPRESSION TREE          : {0}", expressionTree);
-            Console.WriteLine("RESULT (KNOWN   DELEGATE): {0}", Expression.Lambda<Func<int, int>>(expressionTree, parameterExpression).Compile()(5));
-            Console.WriteLine("RESULT (UNKNOWN DELEGATE): {0}", Expression.Lambda(expressionTree, parameterExpression).Compile().DynamicInvoke(5));
+            var knownDelegateLambdaExpression = Expression.Lambda<Func<int, int>>(methodCallExpression, parameterExpression);
+            var unknownDelegateLambdaExpression = Expression.Lambda(methodCallExpression, parameterExpression);
+            Console.WriteLine("EXPRESSION TREE          : {0}", methodCallExpression);
+            Console.WriteLine("RESULT (KNOWN   DELEGATE): {0}", knownDelegateLambdaExpression.Compile()(5));
+            Console.WriteLine("RESULT (UNKNOWN DELEGATE): {0}", unknownDelegateLambdaExpression.Compile().DynamicInvoke(5));
         }
 
         private static int Factorial(int n)
