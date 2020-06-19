@@ -22,12 +22,10 @@ namespace Queryables
     {
         public static void Main()
         {
-            var numbersQuery =
-                from number in new NumbersQueryable()
-                where number.Value < 5
-                select number;
-            var numbersResults = numbersQuery.ToArray();
+            var numbersQuery = new NumbersQueryable().Where(number => number.Value < 5);
             Console.WriteLine("QUERY  : {0}", numbersQuery.Expression);
+
+            var numbersResults = numbersQuery.ToArray();
             Console.WriteLine("RESULTS: {0}", numbersResults.ToJson());
 
             Console.WriteLine();
